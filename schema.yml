@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Teste-backend
+  version: 1.0.0
+  description: Teste-backend-cnab
+paths:
+  /api/transactions/:
+    get:
+      operationId: api_transactions_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+          description: ''
+    post:
+      operationId: api_transactions_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+  /api/transactions/{shop}/:
+    get:
+      operationId: api_transactions_list_2
+      parameters:
+      - in: path
+        name: shop
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+          description: ''
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          maxLength: 50
+        date:
+          type: string
+          format: date
+        value:
+          type: number
+          format: double
+        cpf:
+          type: integer
+        card:
+          type: string
+          maxLength: 12
+        hour:
+          type: string
+          format: date-time
+        owner:
+          type: string
+          maxLength: 14
+        shop:
+          type: string
+          maxLength: 19
+        sign:
+          type: string
+          maxLength: 1
+      required:
+      - card
+      - cpf
+      - date
+      - hour
+      - id
+      - owner
+      - shop
+      - sign
+      - type
+      - value
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

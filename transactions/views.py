@@ -7,10 +7,6 @@ from django.utils.encoding import smart_str
 from rest_framework.views import Response
 
 
-# from django.core.handlers.wsgi import WSGIRequest
-# from django.http import FileResponse
-
-
 class TransactionsView(generics.ListCreateAPIView):
     serializer_class = TransactionSerializer
     queryset = Transaction.objects
